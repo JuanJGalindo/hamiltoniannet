@@ -1,56 +1,109 @@
-# Python
+# ── Python standard (GitHub template) ─────────────────────────────────────────
 __pycache__/
-*.py[cod]
-*.pyo
-*.pyd
+*.py[codz]
+*$py.class
 *.so
-*.egg
-*.egg-info/
-dist/
+.Python
 build/
+develop-eggs/
+dist/
+downloads/
+eggs/
 .eggs/
-*.dist-info/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+*.manifest
+*.spec
+pip-log.txt
+pip-delete-this-directory.txt
 
-# Virtual environments
-.venv/
-venv/
-env/
-.env
-
-# Jupyter
-.ipynb_checkpoints/
-*.ipynb
-
-# pytest / coverage
-.pytest_cache/
-.coverage
-coverage.xml
+# ── Testing / coverage ─────────────────────────────────────────────────────────
 htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py.cover
+.hypothesis/
+.pytest_cache/
+cover/
 test_results.txt
 
-# Type checkers
+# ── Translations ───────────────────────────────────────────────────────────────
+*.mo
+*.pot
+
+# ── Sphinx ─────────────────────────────────────────────────────────────────────
+docs/_build/
+/site
+
+# ── Jupyter ────────────────────────────────────────────────────────────────────
+.ipynb_checkpoints
+*.ipynb
+
+# ── Environments ───────────────────────────────────────────────────────────────
+.env
+.envrc
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# ── Type checkers ──────────────────────────────────────────────────────────────
 .mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
 .ruff_cache/
 
-# Model weights (tracked separately if needed)
-*.pt
-*.pth
-*.ckpt
+# ── Package managers ───────────────────────────────────────────────────────────
+.pdm-python
+.pdm-build/
+.pixi
+__pypackages__/
+.pypirc
 
-# Generated artifacts
-*.png
-*.pdf
-
-# OS
-.DS_Store
-Thumbs.db
-
-# IDE
+# ── IDE ────────────────────────────────────────────────────────────────────────
 .vscode/
 .idea/
 *.sublime-project
 *.sublime-workspace
+.spyderproject
+.spyproject
+.ropeproject
+tempCodeRunnerFile.py
+cython_debug/
 
-# hatchling / build
+# ── OS ─────────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── hnet-specific ─────────────────────────────────────────────────────────────
+# Model weights (large binary artifacts — track separately with DVC if needed)
+*.pt
+*.pth
+*.ckpt
+
+# Generated plots and figures
+*.png
+*.pdf
+
+# Build artifacts
 *.tar.gz
 *.whl
