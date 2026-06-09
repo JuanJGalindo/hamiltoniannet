@@ -1,0 +1,56 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.dist-info/
+
+# Virtual environments
+.venv/
+venv/
+env/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# pytest / coverage
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+test_results.txt
+
+# Type checkers
+.mypy_cache/
+.ruff_cache/
+
+# Model weights (tracked separately if needed)
+*.pt
+*.pth
+*.ckpt
+
+# Generated artifacts
+*.png
+*.pdf
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# hatchling / build
+*.tar.gz
+*.whl
