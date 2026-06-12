@@ -1,4 +1,5 @@
 """Nonlinear pendulum system — the primary test system for all HNN benchmarks."""
+
 from __future__ import annotations
 
 from typing import Any
@@ -79,12 +80,12 @@ class NonlinearPendulum(PhysicsSystem):
         return self.hamiltonian(np.array([q, p]))
 
     def separatrix_energy(self) -> float:
-        """Energy of the separatrix (unstable equilibrium at q=π)."""
+        """Energy of the separatrix (unstable equilibrium at q=π).
+
+        H(π, 0) = -m·g·l·cos(π) = m·g·l divides libration from rotation.
+        """
         m, l, g = self._mass, self._length, self._gravity
-        return float(m * g * l)  # H(π, 0) = m*g*l*(1 - cos(π)) ... wait
-        # H(π, 0) = 0 - m*g*l*cos(π) = m*g*l
-        # H(0, 0) = 0 - m*g*l = -m*g*l (stable equilibrium)
-        # Separatrix: H = m*g*l (libration boundary)
+        return float(m * g * l)
 
     def sample_phase_space(
         self,
@@ -107,8 +108,7 @@ class NonlinearPendulum(PhysicsSystem):
 
     def __repr__(self) -> str:
         return (
-            f"NonlinearPendulum(mass={self._mass}, "
-            f"length={self._length}, gravity={self._gravity})"
+            f"NonlinearPendulum(mass={self._mass}, length={self._length}, gravity={self._gravity})"
         )
 
 

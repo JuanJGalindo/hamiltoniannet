@@ -35,6 +35,7 @@ dev   = [
     "ruff",
     "mypy",
     "pre-commit",
+    "marimo",
 ]
 docs  = ["sphinx", "sphinx-rtd-theme", "myst-parser"]
 
@@ -45,11 +46,34 @@ packages = ["src/hnet"]
 include = ["src/", "tests/", "examples/", "benchmarks/"]
 
 [tool.ruff]
+target-version = "py310"  # matches requires-python >=3.10 (CI matrix includes 3.10)
 line-length = 100
-target-version = "py310"
+src = ["src"]
 
 [tool.ruff.lint]
-select = ["E", "F", "W", "I"]
+select = ["E", "W", "F", "I", "N", "UP", "B", "PT", "NPY", "RUF"]
+ignore = [
+    "N806", # Allow lowercase variables for phase-space coordinates (q, p, z)
+    "N803", # Allow lowercase argument names to match physical notation
+    "E741", # Allow single-letter l (pendulum length) per physical notation
+    "N812", # Allow `import torch.nn.functional as F` (PyTorch convention)
+]
+
+[tool.ruff.lint.per-file-ignores]
+# marimo cell idiom: a trailing bare expression is the cell's rendered output
+# (B018); Greek symbols in UI labels follow physical notation (RUF001).
+"examples/notebooks/*.py" = ["B018", "RUF001"]
+# Greek symbols (σ, Δ) in labels and docstrings follow physical notation.
+"benchmarks/*.py" = ["RUF001", "RUF002"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["hnet"]
+forced-separate = ["tests", "benchmarks"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
 
 [tool.mypy]
 python_version = "3.10"
@@ -63,15 +87,16 @@ addopts = "--tb=short -q"
 [tool.importlinter]
 root_packages = ["hnet"]
 
+# Layers are listed from highest level to lowest level: a module may import
+# from layers below it, never from layers above it.
 [[tool.importlinter.contracts]]
 name = "Strict dependency direction"
 type  = "layers"
 layers = [
-    "hnet._protocols",
-    "hnet.utils",
-    "hnet.systems | hnet.models | hnet.integrators | hnet.losses | hnet.data",
-    "hnet.training",
-    "hnet.evaluation",
     "hnet.visualization",
-    "hnet.benchmarks",
+    "hnet.evaluation",
+    "hnet.training",
+    "hnet.systems | hnet.models | hnet.integrators | hnet.losses | hnet.data",
+    "hnet.utils",
+    "hnet._protocols",
 ]

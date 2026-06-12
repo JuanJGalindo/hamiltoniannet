@@ -1,8 +1,9 @@
 """Unified training loop for all HNN variants."""
+
 from __future__ import annotations
 
 import os
-from typing import Any, Optional
+from typing import Any
 
 import torch
 import torch.nn as nn
@@ -37,16 +38,17 @@ class Trainer:
         self,
         model: HamiltonianModelProtocol,
         loss: LossTermProtocol | Any,
-        config: TrainConfig = TrainConfig(),
+        config: TrainConfig | None = None,
     ) -> None:
+        if config is None:
+            config = TrainConfig()
         self.config = config
         self.device = get_device(config.device)
         seed_everything(config.seed)
 
-        if isinstance(model, nn.Module):
-            self.model = model.to(self.device)
-        else:
-            self.model = model
+        self.model: HamiltonianModelProtocol = (
+            model.to(self.device) if isinstance(model, nn.Module) else model
+        )
 
         self.loss_fn = loss
         self._history: dict[str, list[float]] = {"loss": []}
@@ -61,8 +63,8 @@ class Trainer:
     def fit(
         self,
         dataset: Dataset,
-        val_dataset: Optional[Dataset] = None,
-    ) -> "Trainer":
+        val_dataset: Dataset | None = None,
+    ) -> Trainer:
         """Train the model.
 
         Parameters
@@ -84,7 +86,7 @@ class Trainer:
             for k, v in breakdown.items():
                 self._history.setdefault(k, []).append(v)
 
-            if self.config.scheduler == "reduce_on_plateau" and self._scheduler is not None:
+            if isinstance(self._scheduler, torch.optim.lr_scheduler.ReduceLROnPlateau):
                 self._scheduler.step(loss_val)
             elif self._scheduler is not None:
                 self._scheduler.step()
@@ -154,7 +156,7 @@ class Trainer:
             return torch.optim.LBFGS(params, lr=self.config.lr)
         raise ValueError(f"Unknown optimizer: {self.config.optimizer}")
 
-    def _build_scheduler(self) -> Optional[torch.optim.lr_scheduler.LRScheduler]:
+    def _build_scheduler(self) -> torch.optim.lr_scheduler.LRScheduler | None:
         if self.config.scheduler is None:
             return None
         if self.config.scheduler == "cosine":

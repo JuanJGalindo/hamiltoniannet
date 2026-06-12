@@ -1,4 +1,5 @@
 """Scipy solve_ivp wrapper — default inference integrator."""
+
 from __future__ import annotations
 
 import numpy as np

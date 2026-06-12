@@ -6,9 +6,11 @@ Classes satisfy these protocols by duck-typing — no mandatory base class
 inheritance is required. Users can implement custom systems and models
 in their own codebase without importing any hnet ABC.
 """
+
 from __future__ import annotations
 
-from typing import Any, Callable, Iterator, Optional, Protocol, runtime_checkable
+from collections.abc import Iterator
+from typing import Any, Protocol, runtime_checkable
 
 import numpy as np
 import torch
@@ -30,6 +32,39 @@ class PhysicsSystemProtocol(Protocol):
 
     def equations_of_motion(self, t: float, z: np.ndarray, **params: Any) -> np.ndarray:
         """RHS of Hamilton's equations: dz/dt = f(t, z)."""
+        ...
+
+    def oracle_trajectory(
+        self,
+        z0: np.ndarray,
+        t_span: tuple[float, float],
+        n_points: int = 500,
+        **kwargs: Any,
+    ) -> tuple[np.ndarray, np.ndarray]:
+        """Integrate the true equations of motion.
+
+        Required by ``Evaluator`` (reference trajectories) and
+        ``DerivativeDataset.from_system`` (training data generation).
+        ``PhysicsSystem`` provides a default implementation built on
+        ``equations_of_motion``.
+
+        Returns
+        -------
+        t_eval : np.ndarray, shape (n_points,)
+        Z      : np.ndarray, shape (n_points, state_dim)
+        """
+        ...
+
+    def casimir_errors(self, Z: np.ndarray) -> dict[str, np.ndarray]:
+        """Evaluate Casimir invariant drift along trajectory Z.
+
+        Required by ``Evaluator``. Canonical systems without Casimir
+        invariants return an empty dict (the ``PhysicsSystem`` default).
+
+        Returns
+        -------
+        dict mapping casimir name to error array of shape (n_points,)
+        """
         ...
 
 

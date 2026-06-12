@@ -1,8 +1,9 @@
 """Unit tests for loss functions."""
+
 import pytest
 import torch
 
-from hnet.losses import DerivativeMatchingLoss, LossTerm, WeightedLoss
+from hnet.losses import DerivativeMatchingLoss, WeightedLoss
 from hnet.models import HNN, BaselineMLP
 
 
@@ -51,7 +52,7 @@ class TestWeightedLoss:
         batch = {"z": z, "z_dot": z_dot}
 
         weighted = WeightedLoss([(term, 1.0)])
-        total, breakdown = weighted(model, batch)
+        total, _breakdown = weighted(model, batch)
         direct = term(model, batch)
         assert abs(float(total.item()) - float(direct.item())) < 1e-6
 

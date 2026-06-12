@@ -1,4 +1,7 @@
 """Unit tests for physics systems."""
+
+from dataclasses import FrozenInstanceError
+
 import numpy as np
 import pytest
 
@@ -22,7 +25,7 @@ class TestSystemConfig:
 
     def test_frozen(self):
         cfg = SystemConfig(state_dim=2, phase_dim=2)
-        with pytest.raises(Exception):
+        with pytest.raises(FrozenInstanceError):
             cfg.state_dim = 4  # type: ignore[misc]
 
 
@@ -48,7 +51,7 @@ class TestNonlinearPendulum:
 
     def test_energy_conservation_oracle(self):
         # Oracle trajectory should conserve H to machine precision
-        t, Z = self.system.oracle_trajectory(self.z0, t_span=(0, 10), n_points=100)
+        _t, Z = self.system.oracle_trajectory(self.z0, t_span=(0, 10), n_points=100)
         H0 = self.system.hamiltonian(Z[0])
         energies = [self.system.hamiltonian(z) for z in Z]
         max_drift = max(abs(H - H0) for H in energies)
@@ -85,7 +88,7 @@ class TestSimplePendulum:
     def test_harmonic_oscillator_energy_conservation(self):
         system = SimplePendulum()
         z0 = np.array([0.5, 0.3])
-        t, Z = system.oracle_trajectory(z0, t_span=(0, 10), n_points=100)
+        _t, Z = system.oracle_trajectory(z0, t_span=(0, 10), n_points=100)
         H0 = system.hamiltonian(Z[0])
         energies = [system.hamiltonian(z) for z in Z]
         max_drift = max(abs(H - H0) for H in energies)

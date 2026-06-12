@@ -1,4 +1,5 @@
 """Reproducibility utilities."""
+
 from __future__ import annotations
 
 import random
@@ -13,7 +14,7 @@ def seed_everything(seed: int = 42) -> None:
     Covers Python random, NumPy, PyTorch CPU, and PyTorch CUDA.
     """
     random.seed(seed)
-    np.random.seed(seed)
+    np.random.seed(seed)  # noqa: NPY002 — global legacy seeding is the explicit purpose here
     torch.manual_seed(seed)
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(seed)

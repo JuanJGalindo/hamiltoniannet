@@ -1,14 +1,12 @@
 """Evaluator: rolls out a trained model and computes metrics."""
-from __future__ import annotations
 
-from typing import Optional
+from __future__ import annotations
 
 import numpy as np
 import torch
 
 from hnet._protocols import HamiltonianModelProtocol, IntegratorProtocol, PhysicsSystemProtocol
 from hnet.evaluation.metrics import (
-    casimir_error,
     energy_drift,
     max_energy_error,
     relative_l2_error,
@@ -82,10 +80,10 @@ class Evaluator:
         z0 = np.asarray(z0, dtype=float)
 
         # Oracle reference
-        t_ref, Z_ref = self.system.oracle_trajectory(z0, t_span, n_points=n_steps)
+        _t_ref, Z_ref = self.system.oracle_trajectory(z0, t_span, n_points=n_steps)
 
         # Model prediction
-        t_pred, Z_pred = self.rollout(z0, t_span, n_steps)
+        _t_pred, Z_pred = self.rollout(z0, t_span, n_steps)
 
         results: dict[str, float] = {}
 

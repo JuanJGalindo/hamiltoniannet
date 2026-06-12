@@ -1,4 +1,5 @@
 """Registry for physics systems — enables string-based construction without core changes."""
+
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, TypeVar
@@ -8,7 +9,7 @@ if TYPE_CHECKING:
 
 T = TypeVar("T")
 
-SYSTEM_REGISTRY: dict[str, type["PhysicsSystem"]] = {}
+SYSTEM_REGISTRY: dict[str, type[PhysicsSystem]] = {}
 
 
 def register_system(name: str):
@@ -21,13 +22,15 @@ def register_system(name: str):
 
     system = hnet.system("my_system")  # works immediately
     """
+
     def decorator(cls: type[T]) -> type[T]:
         SYSTEM_REGISTRY[name] = cls  # type: ignore[assignment]
         return cls
+
     return decorator
 
 
-def get_system(name: str, **kwargs) -> "PhysicsSystem":
+def get_system(name: str, **kwargs) -> PhysicsSystem:
     """Instantiate a registered system by name.
 
     Parameters

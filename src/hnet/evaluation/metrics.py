@@ -3,9 +3,10 @@
 All functions here are pure: no side effects, no class state, no global
 variables. This makes them trivially parallelizable and testable.
 """
+
 from __future__ import annotations
 
-from typing import Callable, Optional
+from collections.abc import Callable
 
 import numpy as np
 

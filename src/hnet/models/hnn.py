@@ -5,6 +5,7 @@ Reference
 Greydanus, S., Dzamba, M., & Yosinski, J. (2019).
 Hamiltonian neural networks. NeurIPS 2019.
 """
+
 from __future__ import annotations
 
 from torch import Tensor

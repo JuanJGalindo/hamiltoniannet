@@ -1,5 +1,8 @@
 """MLP backbones for Hamiltonian scalar fields."""
+
 from __future__ import annotations
+
+from typing import ClassVar
 
 import torch
 import torch.nn as nn
@@ -23,7 +26,7 @@ class MLP(nn.Module):
         "tanh" (default), "relu", "silu", "gelu", or "sin".
     """
 
-    _ACTIVATIONS = {
+    _ACTIVATIONS: ClassVar[dict[str, type[nn.Module] | None]] = {
         "tanh": nn.Tanh,
         "relu": nn.ReLU,
         "silu": nn.SiLU,
@@ -47,7 +50,8 @@ class MLP(nn.Module):
                 f"activation must be one of {list(self._ACTIVATIONS)}, got '{activation}'"
             )
 
-        act_cls = Sin if activation == "sin" else self._ACTIVATIONS[activation]
+        registered = self._ACTIVATIONS[activation]
+        act_cls: type[nn.Module] = Sin if registered is None else registered
 
         layers: list[nn.Module] = [nn.Linear(input_dim, hidden_dim), act_cls()]
         for _ in range(n_layers - 2):

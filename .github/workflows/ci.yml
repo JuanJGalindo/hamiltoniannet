@@ -24,8 +24,14 @@ jobs:
       - name: Install package and dependencies
         run: pip install -e ".[dev]"
 
+      - name: Check formatting with ruff
+        run: ruff format --check .
+
       - name: Lint with ruff
-        run: ruff check src/hnet/
+        run: ruff check .
+
+      - name: Verify layered architecture with import-linter
+        run: lint-imports
 
       - name: Type check with mypy
         run: mypy src/hnet/ --ignore-missing-imports

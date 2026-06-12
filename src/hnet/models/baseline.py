@@ -1,4 +1,5 @@
 """Baseline unconstrained MLP — the benchmark foil for all HNN comparisons."""
+
 from __future__ import annotations
 
 import numpy as np
@@ -7,7 +8,6 @@ import torch.nn as nn
 from torch import Tensor
 
 from hnet.models.backbones.mlp import MLP
-from hnet.utils.device import get_device
 
 
 class BaselineMLP(nn.Module):
@@ -53,7 +53,7 @@ class BaselineMLP(nn.Module):
 
     def energy(self, z: Tensor) -> Tensor:
         """BaselineMLP has no meaningful energy. Returns zeros."""
-        return torch.zeros(z.shape[:-1] + (1,), device=z.device, dtype=z.dtype)
+        return torch.zeros((*z.shape[:-1], 1), device=z.device, dtype=z.dtype)
 
     def make_scipy_vf(self, device: torch.device | str = "cpu"):
         """Return a scipy.integrate.solve_ivp-compatible vector field."""

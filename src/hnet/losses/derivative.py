@@ -1,4 +1,5 @@
 """Derivative matching loss — the standard HNN training objective."""
+
 from __future__ import annotations
 
 from typing import Any

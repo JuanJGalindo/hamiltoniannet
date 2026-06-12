@@ -4,10 +4,10 @@ from hnet.models.baseline import BaselineMLP
 from hnet.models.hnn import HNN
 
 __all__ = [
-    "HamiltonianNet",
     "HNN",
-    "BaselineMLP",
     "MLP",
-    "SinMLP",
+    "BaselineMLP",
+    "HamiltonianNet",
     "Sin",
+    "SinMLP",
 ]

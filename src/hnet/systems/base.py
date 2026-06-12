@@ -1,14 +1,14 @@
 """Base class and configuration for Hamiltonian physical systems."""
+
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from collections.abc import Callable
 from dataclasses import dataclass, field
-from typing import Any, Callable, Optional
+from typing import Any
 
 import numpy as np
 from scipy.integrate import solve_ivp
-
-from hnet._protocols import PhysicsSystemProtocol
 
 
 @dataclass(frozen=True)
@@ -34,7 +34,7 @@ class SystemConfig:
     state_dim: int
     phase_dim: int
     is_canonical: bool = True
-    manifold: Optional[str] = None
+    manifold: str | None = None
     casimir_functions: tuple[Callable[[np.ndarray], float], ...] = field(default_factory=tuple)
     param_names: tuple[str, ...] = field(default_factory=tuple)
 
@@ -110,9 +110,7 @@ class PhysicsSystem(ABC):
         """
         z0 = np.asarray(z0, dtype=float)
         if z0.shape != (self.state_dim,):
-            raise ValueError(
-                f"z0 must have shape ({self.state_dim},), got {z0.shape}"
-            )
+            raise ValueError(f"z0 must have shape ({self.state_dim},), got {z0.shape}")
         t_eval = np.linspace(t_span[0], t_span[1], n_points)
 
         def rhs(t: float, z: np.ndarray) -> np.ndarray:
@@ -154,5 +152,3 @@ class PhysicsSystem(ABC):
             f"state_dim={self.config.state_dim}, "
             f"canonical={self.config.is_canonical})"
         )
-
-

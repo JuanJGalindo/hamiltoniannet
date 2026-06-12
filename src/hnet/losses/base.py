@@ -1,4 +1,5 @@
 """Base classes for composable loss functions."""
+
 from __future__ import annotations
 
 from abc import ABC, abstractmethod

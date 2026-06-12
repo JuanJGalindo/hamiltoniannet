@@ -1,4 +1,5 @@
 """Pure autograd utilities for computing symplectic and Poisson gradients."""
+
 from __future__ import annotations
 
 import torch

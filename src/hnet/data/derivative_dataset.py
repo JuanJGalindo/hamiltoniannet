@@ -10,10 +10,10 @@ minimize the residual of a forward-Euler scheme instead of Hamilton's
 equations. CubicSpline reconstruction gives O(h^4) accuracy and avoids
 this bias entirely.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Optional
 
 import numpy as np
 import torch
@@ -77,9 +77,9 @@ class DerivativeDataset(Dataset):
         cls,
         system: PhysicsSystemProtocol,
         initial_conditions: list[np.ndarray],
-        config: DataConfig = DataConfig(),
+        config: DataConfig | None = None,
         device: torch.device | str = "cpu",
-    ) -> "DerivativeDataset":
+    ) -> DerivativeDataset:
         """Generate dataset from a PhysicsSystem.
 
         Parameters
@@ -93,6 +93,8 @@ class DerivativeDataset(Dataset):
         -------
         DerivativeDataset
         """
+        if config is None:
+            config = DataConfig()
         rng = np.random.default_rng(config.seed)
         all_Z: list[np.ndarray] = []
         all_Z_dot: list[np.ndarray] = []

@@ -9,6 +9,7 @@ Quick start
 >>> config = hnet.TrainConfig(epochs=5000)
 >>> trainer = hnet.Trainer(model, hnet.losses.DerivativeMatchingLoss(), config)
 """
+
 from hnet import data, evaluation, integrators, losses, models, systems, utils
 from hnet.systems.registry import get_system, register_system
 from hnet.training.config import TrainConfig
@@ -17,17 +18,17 @@ from hnet.training.trainer import Trainer
 __version__ = "0.1.0"
 
 __all__ = [
-    # Sub-packages
-    "systems",
-    "models",
-    "losses",
-    "data",
-    "integrators",
-    "evaluation",
-    "utils",
     # Top-level shortcuts
     "TrainConfig",
     "Trainer",
-    "register_system",
+    "data",
+    "evaluation",
     "get_system",
+    "integrators",
+    "losses",
+    "models",
+    "register_system",
+    # Sub-packages
+    "systems",
+    "utils",
 ]

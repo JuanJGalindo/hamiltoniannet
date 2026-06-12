@@ -1,6 +1,6 @@
 """Unit tests for evaluation metric functions (pure functions)."""
+
 import numpy as np
-import pytest
 
 from hnet.evaluation.metrics import (
     casimir_error,
@@ -10,6 +10,29 @@ from hnet.evaluation.metrics import (
     relative_l2_error,
     spin_norm_error,
 )
+
+_RNG = np.random.default_rng(42)
+
+
+def constant_h(z):
+    """Truly constant H — zero drift by definition."""
+    return 5.0
+
+
+def first_coordinate_h(z):
+    return float(z[0])
+
+
+def quadratic_h(z):
+    return float(z[0] ** 2 + z[1] ** 2)
+
+
+def dot_casimir(z):
+    return float(np.dot(z, z))
+
+
+def norm_casimir(z):
+    return float(np.linalg.norm(z))
 
 
 class TestRelativeL2Error:
@@ -40,49 +63,42 @@ class TestMaxEnergyError:
     def test_zero_energy_drift(self):
         # All points have the same H value (H = constant 5.0)
         traj = np.array([[1.0, 0.0], [2.0, 3.0], [-1.0, 0.5]])
-        H = lambda z: 5.0  # truly constant H — zero drift by definition
-        assert max_energy_error(traj, H) < 1e-10
+        assert max_energy_error(traj, constant_h) < 1e-10
 
     def test_nonzero_drift(self):
         traj = np.array([[1.0, 0.0], [2.0, 0.0]])
-        H = lambda z: float(z[0])
-        err = max_energy_error(traj, H, normalize=True)
+        err = max_energy_error(traj, first_coordinate_h, normalize=True)
         assert err > 0
 
     def test_normalized_vs_unnormalized(self):
         # H₀ = 10.0, drift = 2.0, so err_norm = 2/10 = 0.2, err_raw = 2.0
         traj = np.array([[10.0, 0.0], [12.0, 0.0]])
-        H = lambda z: float(z[0])
-        err_norm = max_energy_error(traj, H, normalize=True)
-        err_raw  = max_energy_error(traj, H, normalize=False)
+        err_norm = max_energy_error(traj, first_coordinate_h, normalize=True)
+        err_raw = max_energy_error(traj, first_coordinate_h, normalize=False)
         assert err_norm < err_raw  # 0.2 < 2.0
 
 
 class TestEnergyDrift:
     def test_shape(self):
-        traj = np.random.randn(100, 2)
-        H = lambda z: float(z[0]**2 + z[1]**2)
-        drift = energy_drift(traj, H)
+        traj = _RNG.standard_normal((100, 2))
+        drift = energy_drift(traj, quadratic_h)
         assert drift.shape == (100,)
 
     def test_starts_near_zero(self):
         traj = np.array([[1.0, 0.0], [1.0, 0.0], [1.0, 0.0]])
-        H = lambda z: float(z[0]**2 + z[1]**2)
-        drift = energy_drift(traj, H)
+        drift = energy_drift(traj, quadratic_h)
         assert float(drift[0]) < 1e-10
 
 
 class TestCasimirError:
     def test_constant_casimir(self):
         traj = np.ones((50, 3))
-        C = lambda z: float(np.dot(z, z))  # always 3.0
-        err = casimir_error(traj, C)
+        err = casimir_error(traj, dot_casimir)  # always 3.0
         assert np.all(err < 1e-10)
 
     def test_shape(self):
-        traj = np.random.randn(30, 3)
-        C = lambda z: float(np.linalg.norm(z))
-        err = casimir_error(traj, C)
+        traj = _RNG.standard_normal((30, 3))
+        err = casimir_error(traj, norm_casimir)
         assert err.shape == (30,)
 
 
@@ -101,7 +117,7 @@ class TestSpinNormError:
 
 class TestCosineSimilarity:
     def test_identical_vectors(self):
-        x = np.random.randn(50, 3)
+        x = _RNG.standard_normal((50, 3))
         sim = cosine_similarity_trace(x, x)
         assert np.allclose(sim, 1.0, atol=1e-6)
 
@@ -112,7 +128,7 @@ class TestCosineSimilarity:
         assert abs(float(sim[0])) < 1e-10
 
     def test_shape(self):
-        x = np.random.randn(20, 4)
-        y = np.random.randn(20, 4)
+        x = _RNG.standard_normal((20, 4))
+        y = _RNG.standard_normal((20, 4))
         sim = cosine_similarity_trace(x, y)
         assert sim.shape == (20,)

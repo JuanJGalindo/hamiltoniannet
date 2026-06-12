@@ -1,9 +1,10 @@
 """Unit tests for HNN model classes."""
+
 import numpy as np
 import pytest
 import torch
 
-from hnet.models import HNN, BaselineMLP, MLP, Sin, SinMLP
+from hnet.models import HNN, MLP, BaselineMLP, Sin
 from hnet.models.base import HamiltonianNet
 
 

@@ -3,6 +3,7 @@
 Runs in < 60s on CPU (200 epochs, small dataset).
 Serves as the CI smoke test that catches import errors and breaking changes.
 """
+
 import numpy as np
 import pytest
 
@@ -31,13 +32,13 @@ def trained_hnn():
 
 
 def test_training_loss_decreases(trained_hnn):
-    model, system, trainer = trained_hnn
+    _model, _system, trainer = trained_hnn
     losses = trainer.history["loss"]
     assert losses[-1] < losses[0], "Training loss did not decrease"
 
 
 def test_energy_error_finite(trained_hnn):
-    model, system, trainer = trained_hnn
+    model, system, _trainer = trained_hnn
     z0 = np.array([2.0, 0.9])
     evaluator = Evaluator(model, system, ScipyIntegrator())
     results = evaluator.evaluate(z0, t_span=(0, 10), n_steps=100)
@@ -48,7 +49,7 @@ def test_energy_better_than_random(trained_hnn):
     """HNN after 200 epochs should show some energy conservation signal.
     We use a generous threshold since 200 epochs is far from convergence.
     """
-    model, system, trainer = trained_hnn
+    model, system, _trainer = trained_hnn
     z0 = np.array([2.0, 0.9])
     evaluator = Evaluator(model, system, ScipyIntegrator())
     results = evaluator.evaluate(z0, t_span=(0, 5), n_steps=100)
@@ -59,7 +60,7 @@ def test_energy_better_than_random(trained_hnn):
 
 
 def test_metrics_dict_keys(trained_hnn):
-    model, system, trainer = trained_hnn
+    model, system, _trainer = trained_hnn
     evaluator = Evaluator(model, system, ScipyIntegrator())
     results = evaluator.evaluate([2.0, 0.9], t_span=(0, 5))
     assert "rel_l2_q" in results
