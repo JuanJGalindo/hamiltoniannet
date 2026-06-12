@@ -25,7 +25,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-kaggle = ["kaggle-benchmarks", "kaggle-cli"]
+kaggle = ["kaggle-benchmarks", "kaggle>=2.0"]
 hgn   = ["torchvision"]
 sno   = ["torch-harmonics"]
 dev   = [
@@ -64,7 +64,7 @@ ignore = [
 # (B018); Greek symbols in UI labels follow physical notation (RUF001).
 "examples/notebooks/*.py" = ["B018", "RUF001"]
 # Greek symbols (σ, Δ) in labels and docstrings follow physical notation.
-"benchmarks/*.py" = ["RUF001", "RUF002"]
+"benchmarks/**/*.py" = ["RUF001", "RUF002"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["hnet"]
