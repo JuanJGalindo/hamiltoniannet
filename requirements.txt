@@ -1,0 +1,14 @@
+# hamiltoniannet — core runtime dependencies (flexible bounds).
+#
+# NOTE: pyproject.toml is the source of truth. This file mirrors the core
+# dependencies for users who prefer `pip install -r`. For development tooling
+# use requirements-dev.txt; for an exact pin use requirements-lock.txt.
+#
+# Editable install (preferred): pip install -e ".[dev]"
+#
+# PyTorch CPU build: pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+torch>=2.0
+numpy>=1.24
+scipy>=1.10
+matplotlib>=3.6

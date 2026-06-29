@@ -15,7 +15,7 @@ This document describes every file created during the first implementation sessi
 ## Project Location
 
 ```
-C:\Users\juanj\Desktop\WorkSpace\PhysicsSurrogates\hamiltoniannet\
+C:\Users\juanj\OneDrive\Desktop\Workspace\hamiltoniannet\
 ```
 
 Install the package in editable mode from that directory:
@@ -345,7 +345,7 @@ t, drift   = evaluator.energy_drift_array(z0=[2.0, 0.9], t_span=(0, 100))
 ### Running tests
 
 ```bash
-cd C:\Users\juanj\Desktop\WorkSpace\PhysicsSurrogates\hamiltoniannet
+cd C:\Users\juanj\OneDrive\Desktop\Workspace\hamiltoniannet
 
 # All tests
 python -m pytest tests/ -v
@@ -451,9 +451,9 @@ If adding a new variant that does not fit `HamiltonianNet` (e.g., it has no `sca
 
 ---
 
-## What Comes Next (Week 2 per the Roadmap)
+## What Comes Next (Weeks 5–6 per the Roadmap)
 
-Following the plan at `C:\Users\juanj\.claude\plans\we-need-to-come-refactored-cocoa.md`:
+Following the plan at [`../SpinesAI_Direct/HNNs_WorkPlan.md`](../SpinesAI_Direct/HNNs_WorkPlan.md) (6-month roadmap):
 
 **Week 5 (SHNN):**
 - `src/hnet/losses/symplectic.py` — `SymplecticSchemeLoss` (symplectic Euler + implicit midpoint)
@@ -468,8 +468,8 @@ Following the plan at `C:\Users\juanj\.claude\plans\we-need-to-come-refactored-c
 - `src/hnet/data/collocation_dataset.py` — stochastic time-point sampler
 
 **Source to read before implementing:**
-- `C:\Users\juanj\Desktop\WorkSpace\PhysicsSurrogates\HNNs\HNN_Core_Benchmarks.ipynb` Cell 5 — the SelfSupervisedHNN training loop is the canonical reference
-- `C:\Users\juanj\Desktop\WorkSpace\PhysicsSurrogates\HNNs\bib\BasicHNNs\SHNNs_DavidMehats2023.pdf` — required for correct `SymplecticSchemeLoss` scheme-point interpolation
+- `C:\Users\juanj\OneDrive\Desktop\Workspace\SpinesAI_Direct\Core\HNN_Core_Benchmarks.ipynb` Cell 5 — the SelfSupervisedHNN training loop is the canonical reference
+- `C:\Users\juanj\OneDrive\Desktop\Workspace\SpinesAI_Direct\bib\BasicHNNs\SHNNs_DavidMehats2023.pdf` — required for correct `SymplecticSchemeLoss` scheme-point interpolation
 
 ---
 
@@ -478,7 +478,7 @@ Following the plan at `C:\Users\juanj\.claude\plans\we-need-to-come-refactored-c
 Run this to confirm everything is working after a fresh install:
 
 ```bash
-cd C:\Users\juanj\Desktop\WorkSpace\PhysicsSurrogates\hamiltoniannet
+cd C:\Users\juanj\OneDrive\Desktop\Workspace\hamiltoniannet
 pip install -e .
 python -m pytest tests/ -v
 ```

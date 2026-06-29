@@ -1,0 +1,14 @@
+# hamiltoniannet — development dependencies (flexible bounds).
+# Mirrors the [dev] extra in pyproject.toml. Install with:
+#   pip install -r requirements-dev.txt
+# (equivalent to `pip install -e ".[dev]"` minus the editable package itself).
+
+-r requirements.txt
+
+pytest>=7
+pytest-cov
+import-linter
+ruff
+mypy
+pre-commit
+marimo
