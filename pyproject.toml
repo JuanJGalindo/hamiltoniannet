@@ -76,17 +76,12 @@ indent-style = "space"
 skip-magic-trailing-comma = false
 
 [tool.mypy]
-python_version = "3.10"
+# numpy 2.x stubs use PEP 695 `type` alias syntax which requires Python 3.12
+# grammar. Setting python_version = "3.12" lets mypy parse them correctly.
+# Our source code contains no 3.12-only constructs, so this is safe.
+python_version = "3.12"
 strict = false
 ignore_missing_imports = true
-
-# numpy 2.x stubs use PEP 695 `type` alias syntax (Python 3.12 only).
-# `ignore_errors` doesn't help because the error fires during stub *parsing*
-# before overrides apply. `follow_imports = "skip"` prevents mypy from opening
-# the stubs at all; numpy call sites in our code are still typed as `Any`.
-[[tool.mypy.overrides]]
-module = ["numpy", "numpy.*"]
-follow_imports = "skip"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
