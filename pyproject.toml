@@ -80,6 +80,13 @@ python_version = "3.10"
 strict = false
 ignore_missing_imports = true
 
+# numpy 2.x stubs use PEP 695 `type` alias syntax (Python 3.12 only), which
+# mypy rejects when checking against python_version = "3.10". Skip numpy's own
+# stubs entirely; our code's numpy usage is still checked via call sites.
+[[tool.mypy.overrides]]
+module = ["numpy", "numpy.*"]
+ignore_errors = true
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "--tb=short -q"
