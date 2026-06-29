@@ -2,7 +2,7 @@
 
 ## 1. Core idea
 
-The scalar-Hamiltonian trick parameterizes the *energy* $H_\theta(q,p):\mathbb{R}^{2n}\to\mathbb{R}$ with a network and *derives* the vector field as its symplectic gradient $\dot z = J^{-1}\nabla H_\theta$, $J=\begin{psmallmatrix}0&I\\-I&0\end{psmallmatrix}$, rather than regressing the field directly. Because $\tfrac{d}{dt}H_\theta = \nabla H_\theta^\top J^{-1}\nabla H_\theta = 0$ identically (skew-symmetry of $J$), the learned energy is conserved along every predicted trajectory by construction. A baseline MLP fitting $\dot x = f_\theta(x)$ has no such constraint: its $2n$ free field components accumulate per-step error and let trajectories drift off the true energy level set over long horizons.
+The scalar-Hamiltonian trick parameterizes the *energy* $H_\theta(q,p):\mathbb{R}^{2n}\to\mathbb{R}$ with a network and *derives* the vector field as its symplectic gradient $\dot z = J^{-1}\nabla H_\theta$, $J=\begin{smallmatrix}0&I\\-I&0\end{smallmatrix}$, rather than regressing the field directly. Because $\tfrac{d}{dt}H_\theta = \nabla H_\theta^\top J^{-1}\nabla H_\theta = 0$ identically (skew-symmetry of $J$), the learned energy is conserved along every predicted trajectory by construction. A baseline MLP fitting $\dot x = f_\theta(x)$ has no such constraint: its $2n$ free field components accumulate per-step error and let trajectories drift off the true energy level set over long horizons.
 
 ## 2. Variants
 
@@ -93,16 +93,16 @@ Extends symplectic learning to infinite dimensions (Hamiltonian PDEs); the opera
 
 ## 3. Comparison table
 
-| Variant | Year | System class | Symplectic | Needs ẋ labels | Solver in train loop | hnet module |
-|---|---|---|---|---|---|---|
-| HNN | 2019 | Conservative, autonomous | Yes (by construction) | Yes | No | `models/hnn.py` |
-| HGN | 2020 | Conservative, from pixels | Approx (leapfrog latent) | No | Yes (leapfrog) | `models/hgn.py` |
-| pHNN | 2021 | Forced + damped | No (dissipation modeled) | Yes (or state pairs) | Optional (RK4) | `models/phnn.py` |
-| Adaptable HNN | 2021 | Conservative, param-varying | Yes | Yes | No | `models/adaptable_hnn.py` |
-| Self-Supervised HNN | 2022 | Conservative, known $H$ | Yes (NN is solver) | No (data-free) | No (NN is solver) | `models/selfsup_hnn.py` |
-| SHNN | 2023 | Conservative, autonomous | Yes (strict) | No (state pairs) | Yes (symplectic, in loss) | `models/shnn.py` |
-| sPHNN | 2025 | Forced + damped + stable | No (dissipation by design) | Optional | Yes (Tsit5, traj. fit) | `models/sphnn.py` |
-| SNO | 2026 | Conservative PDEs (∞-dim) | Yes (strict) | No (function pairs) | No (SNO is stepper) | `models/sno.py` |
+| Variant             | Year | System class                | Symplectic                 | Needs ẋ labels       | Solver in train loop      | hnet module               |
+| ------------------- | ---- | --------------------------- | -------------------------- | -------------------- | ------------------------- | ------------------------- |
+| HNN                 | 2019 | Conservative, autonomous    | Yes (by construction)      | Yes                  | No                        | `models/hnn.py`           |
+| HGN                 | 2020 | Conservative, from pixels   | Approx (leapfrog latent)   | No                   | Yes (leapfrog)            | `models/hgn.py`           |
+| pHNN                | 2021 | Forced + damped             | No (dissipation modeled)   | Yes (or state pairs) | Optional (RK4)            | `models/phnn.py`          |
+| Adaptable HNN       | 2021 | Conservative, param-varying | Yes                        | Yes                  | No                        | `models/adaptable_hnn.py` |
+| Self-Supervised HNN | 2022 | Conservative, known $H$     | Yes (NN is solver)         | No (data-free)       | No (NN is solver)         | `models/selfsup_hnn.py`   |
+| SHNN                | 2023 | Conservative, autonomous    | Yes (strict)               | No (state pairs)     | Yes (symplectic, in loss) | `models/shnn.py`          |
+| sPHNN               | 2025 | Forced + damped + stable    | No (dissipation by design) | Optional             | Yes (Tsit5, traj. fit)    | `models/sphnn.py`         |
+| SNO                 | 2026 | Conservative PDEs (∞-dim)   | Yes (strict)               | No (function pairs)  | No (SNO is stepper)       | `models/sno.py`           |
 
 ## 4. Lineage
 
