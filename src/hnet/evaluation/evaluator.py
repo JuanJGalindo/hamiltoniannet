@@ -56,8 +56,8 @@ class Evaluator:
         t_eval : np.ndarray, shape (n_steps,)
         Z_pred : np.ndarray, shape (n_steps, state_dim)
         """
-        z0 = np.asarray(z0, dtype=float)
-        return self.integrator.integrate(self.model, z0, t_span, n_steps)
+        z0_arr: np.ndarray = np.asarray(z0, dtype=float)
+        return self.integrator.integrate(self.model, z0_arr, t_span, n_steps)
 
     def evaluate(
         self,
@@ -77,13 +77,13 @@ class Evaluator:
         -------
         dict with keys: "rel_l2_q", "max_energy_error", "casimir_*", etc.
         """
-        z0 = np.asarray(z0, dtype=float)
+        z0_arr: np.ndarray = np.asarray(z0, dtype=float)
 
         # Oracle reference
-        _t_ref, Z_ref = self.system.oracle_trajectory(z0, t_span, n_points=n_steps)
+        _t_ref, Z_ref = self.system.oracle_trajectory(z0_arr, t_span, n_points=n_steps)
 
         # Model prediction
-        _t_pred, Z_pred = self.rollout(z0, t_span, n_steps)
+        _t_pred, Z_pred = self.rollout(z0_arr, t_span, n_steps)
 
         results: dict[str, float] = {}
 

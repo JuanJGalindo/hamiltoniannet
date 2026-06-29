@@ -31,7 +31,7 @@ q_\phi(z\mid x_{0:T})\xrightarrow{f_\psi} s_0 \xrightarrow{\text{leapfrog }H_\ga
 ### pHNN — Desai, Roberts, Mattheakis, Sondak & Protopapas (2021)
 Adds energy dissipation and time-dependent forcing via the port-Hamiltonian decomposition $H{+}F(t){+}N$.
 ```math
-\begin{psmallmatrix}\dot q\\\dot p\end{psmallmatrix}=\Big[J+\begin{psmallmatrix}0&0\\0&N\end{psmallmatrix}\Big]\nabla H + \begin{psmallmatrix}0\\F(t)\end{psmallmatrix} \qquad\text{(damping }N\text{, forcing }F)
+\begin{smallmatrix}\dot q\\\dot p\end{smallmatrix}=\Big[J+\begin{smallmatrix}0&0\\0&N\end{smallmatrix}\Big]\nabla H + \begin{smallmatrix}0\\F(t)\end{smallmatrix} \qquad\text{(damping }N\text{, forcing }F)
 ```
 ```math
 \mathcal{L}=\|\hat{\dot q}-\dot q\|^2+\|\hat{\dot p}-\dot p\|^2+\lambda_F\|F\|_1+\lambda_N\|N\|_1 \qquad\text{(L1 enforces parsimony)}
