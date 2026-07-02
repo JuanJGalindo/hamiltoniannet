@@ -52,4 +52,4 @@ pytest tests/ -q          # expect 62 passed
 
 ## Related
 
-[SpinesAI_Direct](../SpinesAI_Direct) (research) · [`docs/architecture.md`](docs/architecture.md) · [`docs/literature_review.md`](docs/literature_review.md) · [CONTRIBUTING.md](CONTRIBUTING.md) · root [`WORKSPACE_OVERVIEW.md`](../WORKSPACE_OVERVIEW.md).
+[SpinesAI_Direct](../SpinesAI_Direct) (research) · [`docs/architecture.md`](docs/architecture.md) · [`docs/literature_review.md`](docs/literature_review.md) · [CONTRIBUTING.md](CONTRIBUTING.md) · parent [`CLAUDE.md`](../CLAUDE.md) (PhysicsSurrogates memory).

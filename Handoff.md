@@ -15,7 +15,7 @@ This document describes every file created during the first implementation sessi
 ## Project Location
 
 ```
-C:\Users\juanj\OneDrive\Desktop\Workspace\hamiltoniannet\
+C:\Users\juanj\Desktop\WorkSpace\PhysicsSurrogates\hamiltoniannet\
 ```
 
 Install the package in editable mode from that directory:
@@ -345,7 +345,7 @@ t, drift   = evaluator.energy_drift_array(z0=[2.0, 0.9], t_span=(0, 100))
 ### Running tests
 
 ```bash
-cd C:\Users\juanj\OneDrive\Desktop\Workspace\hamiltoniannet
+cd C:\Users\juanj\Desktop\WorkSpace\PhysicsSurrogates\hamiltoniannet
 
 # All tests
 python -m pytest tests/ -v
@@ -468,8 +468,8 @@ Following the plan at [`../SpinesAI_Direct/HNNs_WorkPlan.md`](../SpinesAI_Direct
 - `src/hnet/data/collocation_dataset.py` — stochastic time-point sampler
 
 **Source to read before implementing:**
-- `C:\Users\juanj\OneDrive\Desktop\Workspace\SpinesAI_Direct\Core\HNN_Core_Benchmarks.ipynb` Cell 5 — the SelfSupervisedHNN training loop is the canonical reference
-- `C:\Users\juanj\OneDrive\Desktop\Workspace\SpinesAI_Direct\bib\BasicHNNs\SHNNs_DavidMehats2023.pdf` — required for correct `SymplecticSchemeLoss` scheme-point interpolation
+- `C:\Users\juanj\Desktop\WorkSpace\PhysicsSurrogates\SpinesAI_Direct\Core\HNN_Core_Benchmarks.ipynb` Cell 5 — the SelfSupervisedHNN training loop is the canonical reference
+- `C:\Users\juanj\Desktop\WorkSpace\PhysicsSurrogates\SpinesAI_Direct\bib\BasicHNNs\SHNNs_DavidMehats2023.pdf` — required for correct `SymplecticSchemeLoss` scheme-point interpolation
 
 ---
 
@@ -478,7 +478,7 @@ Following the plan at [`../SpinesAI_Direct/HNNs_WorkPlan.md`](../SpinesAI_Direct
 Run this to confirm everything is working after a fresh install:
 
 ```bash
-cd C:\Users\juanj\OneDrive\Desktop\Workspace\hamiltoniannet
+cd C:\Users\juanj\Desktop\WorkSpace\PhysicsSurrogates\hamiltoniannet
 pip install -e .
 python -m pytest tests/ -v
 ```
