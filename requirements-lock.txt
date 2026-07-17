@@ -4,11 +4,11 @@
 #   pip freeze > requirements-freeze.txt
 #
 # PyTorch is the CPU wheel — install it first from its index:
-#   pip install torch==2.12.1 --index-url https://download.pytorch.org/whl/cpu
+#   pip install torch==2.13.0 --index-url https://download.pytorch.org/whl/cpu
 #   pip install -r requirements-lock.txt
 
 # ── core ──
-torch==2.12.1
+torch==2.13.0
 numpy==2.4.4
 scipy==1.18.0
 matplotlib==3.11.0
